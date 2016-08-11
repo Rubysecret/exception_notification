@@ -3,6 +3,7 @@ require 'active_support/core_ext/time'
 require 'action_mailer'
 require 'action_dispatch'
 require 'pp'
+require 'objspace'
 
 module ExceptionNotifier
   class EmailNotifier < BaseNotifier
@@ -83,7 +84,15 @@ module ExceptionNotifier
                 object.to_s
             end
           end
-
+          
+          helper_method :shrink_contents
+            
+            def shrink_contents(sections_content)
+              if ObjectSpace.memsize_of(sections_content) >  4194304
+               sections_content = sections_content.first(10).to_h
+              end
+            end
+            
           helper_method :safe_encode
 
           def safe_encode(value)
