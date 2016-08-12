@@ -9,7 +9,7 @@ module ExceptionNotifier
   class EmailNotifier < BaseNotifier
     attr_accessor(:sender_address, :exception_recipients,
     :pre_callback, :post_callback,
-    :email_prefix, :email_format, :sections, :background_sections,
+    :email_prefix, :email_format, :sections, :background_sections, :sections_content,
     :verbose_subject, :normalize_subject, :delivery_method, :mailer_settings,
     :email_headers, :mailer_parent, :template_path, :deliver_with)
 
