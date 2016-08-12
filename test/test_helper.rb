@@ -16,3 +16,5 @@ require "mocha/setup"
 
 Rails.backtrace_cleaner.remove_silencers!
 ExceptionNotifier.testing_mode!
+
+require 'mocha/mini_test'
