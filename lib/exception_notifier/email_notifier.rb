@@ -3,12 +3,13 @@ require 'active_support/core_ext/time'
 require 'action_mailer'
 require 'action_dispatch'
 require 'pp'
+require 'objspace'
 
 module ExceptionNotifier
   class EmailNotifier < BaseNotifier
     attr_accessor(:sender_address, :exception_recipients,
     :pre_callback, :post_callback,
-    :email_prefix, :email_format, :sections, :background_sections,
+    :email_prefix, :email_format, :sections, :background_sections,  :sections_content,
     :verbose_subject, :normalize_subject, :delivery_method, :mailer_settings,
     :email_headers, :mailer_parent, :template_path, :deliver_with)
 
@@ -55,7 +56,15 @@ module ExceptionNotifier
 
             compose_email
           end
-
+          
+          helper_method :shrink_contents
+            
+            def shrink_contents(sections_content)
+              if ObjectSpace.memsize_of(sections_content) >  4194304
+               sections_content = sections_content.first(10).to_h
+              end
+            end
+          
           private
 
           def compose_subject
@@ -83,8 +92,9 @@ module ExceptionNotifier
                 object.to_s
             end
           end
-
-          helper_method :safe_encode
+          
+          
+         helper_method :safe_encode
 
           def safe_encode(value)
             value.encode("utf-8", invalid: :replace, undef: :replace, replace: "_")
