@@ -56,7 +56,15 @@ module ExceptionNotifier
 
             compose_email
           end
-
+          
+          helper_method :shrink_contents
+            
+            def shrink_contents(sections_content)
+              if ObjectSpace.memsize_of(sections_content) >  4194304
+               sections_content = sections_content.first(10).to_h
+              end
+            end
+          
           private
 
           def compose_subject
@@ -85,15 +93,8 @@ module ExceptionNotifier
             end
           end
           
-          helper_method :shrink_contents
-            
-            def shrink_contents(sections_content)
-              if ObjectSpace.memsize_of(sections_content) >  4194304
-               sections_content = sections_content.first(10).to_h
-              end
-            end
-            
-          helper_method :safe_encode
+          
+         helper_method :safe_encode
 
           def safe_encode(value)
             value.encode("utf-8", invalid: :replace, undef: :replace, replace: "_")
