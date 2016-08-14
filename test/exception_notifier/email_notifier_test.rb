@@ -1,7 +1,5 @@
 require 'test_helper'
 require 'action_mailer'
-require 'objspace'
-require 'byebug'
 
 class EmailNotifierTest < ActiveSupport::TestCase
   setup do
@@ -171,18 +169,6 @@ class EmailNotifierTest < ActiveSupport::TestCase
     assert_match(/invalid_encoding\s+: R__sum__/, mail.encoded)
   end
 
-  test "should shrink sections_content if bigger than 4mb" do
-    email_notifier = ExceptionNotifier::EmailNotifier.new(
-      :sender_address => "<dummynotifier@example.com>",
-      :exception_recipients => %w{dummyexceptions@example.com},
-      :deliver_with => :deliver_now
-    )
-
-
-    assert_equal 10, sections_content.size
-  end
-
-    
   test "should send email using ActionMailer" do
     ActionMailer::Base.deliveries.clear
 
