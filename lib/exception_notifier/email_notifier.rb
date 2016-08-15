@@ -44,12 +44,12 @@ module ExceptionNotifier
                 begin
                   summary = render(section).strip
                   unless summary.blank?
-                    title = (render partial: section).strip
+                   title = render(:partial => "title", locals: { :title => section }).strip
                     [title, summary]
                   end
 
                   rescue Exception => e
-                   title = (render partial: section).strip
+                   title = render(:partial => "title", locals: { :title => section }).strip
                    summary = ["ERROR: Failed to generate exception summary:", [e.class.to_s, e.message].join(": "), e.backtrace && e.backtrace.join("\n")].compact.join("\n\n")
 
                    [title, summary]
