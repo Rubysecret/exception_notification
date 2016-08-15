@@ -121,7 +121,7 @@ class EmailNotifierTest < ActiveSupport::TestCase
   end
 
   test "mail should contain backtrace in body" do
-    assert @mail.encoded.include?("test/exception_notifier/email_notifier_test.rb:9"), "\n#{@mail.inspect}"
+    assert @mail.encoded.include?("test/exception_notifier/email_notifier_test.rb:10"), "\n#{@mail.inspect}"
   end
 
   test "mail should contain data in body" do
