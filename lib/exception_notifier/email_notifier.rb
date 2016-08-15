@@ -53,8 +53,8 @@ module ExceptionNotifier
                    summary = ["ERROR: Failed to generate exception summary:", [e.class.to_s, e.message].join(": "), e.backtrace && e.backtrace.join("\n")].compact.join("\n\n")
 
                    [title, summary]
-                  end
                 end
+            end
 
             compose_email
           end
