@@ -77,6 +77,8 @@ module ExceptionNotifier
            def shrink_contents(sections_content)
               if ObjectSpace.memsize_of(sections_content) >  4194304
                sections_content = sections_content.first(10).to_h
+              else
+                sections_content
               end
            end
 
